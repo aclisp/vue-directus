@@ -1,7 +1,7 @@
 // https://github.com/equicy/weapp-jwt-decode
 
 // weapp jwt-decode
-const b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+const b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 // eslint-disable-next-line no-useless-escape
 const b64re = /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/;
 
@@ -15,7 +15,7 @@ export function weBtoa(string) {
     a,
     b,
     c,
-    result = "",
+    result = '',
     i = 0,
     rest = string.length % 3;
 
@@ -26,7 +26,7 @@ export function weBtoa(string) {
       (c = string.charCodeAt(i++)) > 255
     )
       throw new TypeError(
-        "Failed to execute 'btoa' on 'Window': The string to be encoded contains characters outside of the Latin1 range."
+        "Failed to execute 'btoa' on 'Window': The string to be encoded contains characters outside of the Latin1 range.",
       );
 
     bitmap = (a << 16) | (b << 8) | c;
@@ -37,7 +37,7 @@ export function weBtoa(string) {
       b64.charAt(bitmap & 63);
   }
 
-  return rest ? result.slice(0, rest - 3) + "===".substring(rest) : result;
+  return rest ? result.slice(0, rest - 3) + '==='.substring(rest) : result;
 }
 
 /**
@@ -45,14 +45,14 @@ export function weBtoa(string) {
  * @param {string} string
  */
 export function weAtob(string) {
-  string = String(string).replace(/[\t\n\f\r ]+/g, "");
+  string = String(string).replace(/[\t\n\f\r ]+/g, '');
   if (!b64re.test(string))
     throw new TypeError(
-      "Failed to execute 'atob' on 'Window': The string to be decoded is not correctly encoded."
+      "Failed to execute 'atob' on 'Window': The string to be decoded is not correctly encoded.",
     );
-  string += "==".slice(2 - (string.length & 3));
+  string += '=='.slice(2 - (string.length & 3));
   var bitmap,
-    result = "",
+    result = '',
     r1,
     r2,
     i = 0;
@@ -68,11 +68,7 @@ export function weAtob(string) {
         ? String.fromCharCode((bitmap >> 16) & 255)
         : r2 === 64
         ? String.fromCharCode((bitmap >> 16) & 255, (bitmap >> 8) & 255)
-        : String.fromCharCode(
-            (bitmap >> 16) & 255,
-            (bitmap >> 8) & 255,
-            bitmap & 255
-          );
+        : String.fromCharCode((bitmap >> 16) & 255, (bitmap >> 8) & 255, bitmap & 255);
   }
   return result;
 }
@@ -83,26 +79,26 @@ function b64DecodeUnicode(str) {
     weAtob(str).replace(/(.)/g, function (p) {
       var code = p.charCodeAt(0).toString(16).toUpperCase();
       if (code.length < 2) {
-        code = "0" + code;
+        code = '0' + code;
       }
-      return "%" + code;
-    })
+      return '%' + code;
+    }),
   );
 }
 
 function base64_url_decode(str) {
-  var output = str.replace(/-/g, "+").replace(/_/g, "/");
+  var output = str.replace(/-/g, '+').replace(/_/g, '/');
   switch (output.length % 4) {
     case 0:
       break;
     case 2:
-      output += "==";
+      output += '==';
       break;
     case 3:
-      output += "=";
+      output += '=';
       break;
     default:
-      throw "Illegal base64url string!";
+      throw 'Illegal base64url string!';
   }
 
   try {
@@ -118,15 +114,15 @@ function base64_url_decode(str) {
  * @param {object=} options
  */
 export default function weappJwtDecode(token, options) {
-  if (typeof token !== "string") {
-    throw "Invalid token specified";
+  if (typeof token !== 'string') {
+    throw 'Invalid token specified';
   }
 
   options = options || {};
   var pos = options.header === true ? 0 : 1;
   try {
-    return JSON.parse(base64_url_decode(token.split(".")[pos]));
+    return JSON.parse(base64_url_decode(token.split('.')[pos]));
   } catch (e) {
-    throw "Invalid token specified: " + e.message;
+    throw 'Invalid token specified: ' + e.message;
   }
 }

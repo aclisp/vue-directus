@@ -6,14 +6,14 @@
 // 填写会员表单时，将收集用户信息：姓名、手机、头像、地址、职位。这些信息暂时不允许其自行修改。
 // 会员名下有订单和积分。
 
-import { logDebug } from "./logger";
-import { httpGet } from "./transport";
-import { URLSearchParams } from "./url-search-params-polyfill";
+import { logDebug } from './logger';
+import { httpGet } from './transport';
+import { URLSearchParams } from './url-search-params-polyfill';
 
 export async function fetchUserInfo() {
   const params = new URLSearchParams();
-  params.append("fields", "id,first_name,last_name,email,avatar");
-  const user = await httpGet("/users/me", { params });
+  params.append('fields', 'id,first_name,last_name,email,avatar');
+  const user = await httpGet('/users/me', { params });
   if (user.ok && user.id) {
     const ext = await fetchUserInfoExt(user.id);
     user.ext = ext;
@@ -23,9 +23,9 @@ export async function fetchUserInfo() {
 
 async function fetchUserInfoExt(userId: string) {
   const params = new URLSearchParams();
-  params.append("fields", "*");
-  params.append("filter", JSON.stringify({ sys_user: { _eq: userId } }));
-  params.append("limit", 1);
-  const { ok, msg, data } = await httpGet("/items/joy_user", { params });
+  params.append('fields', '*');
+  params.append('filter', JSON.stringify({ sys_user: { _eq: userId } }));
+  params.append('limit', 1);
+  const { ok, msg, data } = await httpGet('/items/joy_user', { params });
   return ok && data.length > 0 ? data[0] : undefined;
 }

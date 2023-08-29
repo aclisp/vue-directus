@@ -1,21 +1,21 @@
-import { logDebug } from "./logger";
-import { promisify } from "./promisify";
-import { saveToken, getAccessToken, directusHostUrl } from "./transport";
-import { reportError } from "./errors";
+import { logDebug } from './logger';
+import { promisify } from './promisify';
+import { saveToken, getAccessToken, directusHostUrl } from './transport';
+import { reportError } from './errors';
 
-const authLoginUrl = directusHostUrl() + "/auth/login/wechatminiprogram";
+const authLoginUrl = directusHostUrl() + '/auth/login/wechatminiprogram';
 
 /**
  * @returns {Promise<string|undefined>} accessToken
  */
 export async function login() {
-  logDebug("auth.login.start");
+  logDebug('auth.login.start');
 
   // 避免频繁调用 wx.login
   try {
     return await getAccessToken();
   } catch (err) {
-    logDebug("auth.login.getAccessToken:err=%o", err);
+    logDebug('auth.login.getAccessToken:err=%o', err);
     return await wxLogin();
   }
 }
@@ -59,7 +59,7 @@ async function doLogin(code) {
   const res = await promisify(wx.request)({
     url: authLoginUrl,
     data: { code },
-    method: "GET",
+    method: 'GET',
   });
   logDebug(`wx.request:url=${authLoginUrl},res=%o`, res.data);
   // 开发者服务器返回自定义登录态，存入storage

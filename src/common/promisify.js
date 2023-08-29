@@ -9,8 +9,8 @@
  */
 export function promisify(original) {
   // Ensure the argument is a function
-  if (typeof original !== "function") {
-    throw new TypeError("Argument to promisify must be a function");
+  if (typeof original !== 'function') {
+    throw new TypeError('Argument to promisify must be a function');
   }
 
   return function (object) {

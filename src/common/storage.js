@@ -2,9 +2,9 @@
  * represent the local storage
  */
 export class Storage {
-  static LOCAL_STORAGE_KEY = "sMo37rQdbm";
-  _accessToken = "";
-  _refreshToken = "";
+  static LOCAL_STORAGE_KEY = 'sMo37rQdbm';
+  _accessToken = '';
+  _refreshToken = '';
   /** UTC milliseconds when this value expires */
   _expiresAt = 0;
 
