@@ -1,5 +1,6 @@
 import './assets/main.css';
-import 'primevue/resources/themes/lara-light-indigo/theme.css';
+import 'primevue/resources/themes/lara-light-teal/theme.css';
+import 'primeflex/primeflex.css';
 
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
