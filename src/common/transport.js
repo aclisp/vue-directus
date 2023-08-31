@@ -187,8 +187,7 @@ export async function getAccessToken() {
   return storage.accessToken;
 }
 
-// eslint-disable-next-line no-unused-vars
-async function getRefreshToken() {
+export async function getRefreshToken() {
   const storage = await getToken();
   return storage.refreshToken;
 }

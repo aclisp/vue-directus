@@ -1,5 +1,5 @@
 import { logDebug } from './logger';
-import { saveToken, getAccessToken, httpPost } from './transport';
+import { saveToken, getAccessToken, getRefreshToken, httpPost, resetToken } from './transport';
 import { reportError } from './errors';
 
 /**
@@ -17,8 +17,14 @@ export async function login(username, password) {
   }
 }
 
-export function logout() {
-  // TODO
+export async function logout() {
+  try {
+    const refresh_token = await getRefreshToken();
+    await httpPost('/auth/logout', { refresh_token });
+  } catch (err) {
+    // do nothing
+  }
+  resetToken();
 }
 
 async function doLogin(username, password) {
