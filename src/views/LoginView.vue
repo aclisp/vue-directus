@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Button from 'primevue/button';
-import FormInputText from '@/components/FormInputText.vue';
-import FormPassword from '@/components/FormPassword.vue';
+import FormInputText from '@/components/form/float-label/FormInputText.vue';
+import FormPassword from '@/components/form/float-label/FormPassword.vue';
 import { useForm } from 'vee-validate';
 
 const { handleSubmit } = useForm();
