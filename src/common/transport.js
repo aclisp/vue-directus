@@ -5,7 +5,7 @@ import { NeedLoginError, AnotherUserLoginError } from './errors';
 import { URLSearchParams } from './url-search-params-polyfill';
 import jwtDecode from './jwt-decode';
 
-const directusHost = 'http://192.168.0.109:8055';
+const directusHost = 'http://127.0.0.1:8055';
 
 /**
  * Promise of Storage
@@ -152,7 +152,7 @@ function failure(res) {
   };
 }
 
-function success(res, mapResponse) {
+async function success(res, mapResponse) {
   if (res.statusCode == 204) {
     return {
       ok: true,
@@ -160,7 +160,7 @@ function success(res, mapResponse) {
     };
   }
 
-  const json = res.data;
+  const json = await res.json();
 
   let data;
   if (mapResponse) {

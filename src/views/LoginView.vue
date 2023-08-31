@@ -3,11 +3,18 @@ import Button from 'primevue/button';
 import FormInputText from '@/components/form/float-label/FormInputText.vue';
 import FormPassword from '@/components/form/float-label/FormPassword.vue';
 import { useForm } from 'vee-validate';
+import { login } from '@/common/auth';
+import { useToast } from 'primevue/usetoast';
 
 const { handleSubmit } = useForm();
+const toast = useToast();
 
-const onSubmit = handleSubmit((values) => {
-  alert(JSON.stringify(values, null, 2));
+const onSubmit = handleSubmit(async (values) => {
+  try {
+    await login(values.username, values.password);
+  } catch (err) {
+    toast.add({ severity: 'error', detail: String(err) });
+  }
 });
 </script>
 
