@@ -36,7 +36,7 @@ const onSubmit = handleSubmit(async (values) => {
     await login(values.username, values.password);
     await init();
   } catch (err) {
-    toast.add({ severity: 'error', detail: String(err) });
+    toast.add({ severity: 'error', detail: String(err), closable: false, life: 3000 });
   } finally {
     loading.value = false;
   }
@@ -66,7 +66,7 @@ async function onLogout() {
   <div v-else class="main mt-5">
     <p>You have been logged in.</p>
     <p>Hello {{ userInfo.first_name }} {{ userInfo.last_name }} !</p>
-    <Avatar :image="assetsUrl(userInfo.avatar, accessToken)" size="xlarge" />
+    <Avatar v-if="userInfo.avatar" :image="assetsUrl(userInfo.avatar, accessToken)" size="xlarge" />
     <p>{{ userInfo.email }}</p>
     <Button class="w-full mt-5" label="Logout" @click="onLogout" />
   </div>

@@ -5,7 +5,7 @@ import Toast from 'primevue/toast';
 </script>
 
 <template>
-  <Toast />
+  <Toast position="center" />
 
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
