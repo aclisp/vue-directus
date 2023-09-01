@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import Button from 'primevue/button';
+import Avatar from 'primevue/avatar';
 import FormInputText from '@/components/form/float-label/FormInputText.vue';
 import FormPassword from '@/components/form/float-label/FormPassword.vue';
 import { useForm } from 'vee-validate';
 import { login, logout } from '@/common/auth';
 import { useToast } from 'primevue/usetoast';
-import { ref, onMounted } from 'vue';
-import { getAccessToken } from '@/common/transport';
+import { ref, onMounted, shallowRef, type Ref } from 'vue';
+import { getAccessToken, assetsUrl } from '@/common/transport';
 import { fetchUserInfo } from '@/common/user';
 
-const { handleSubmit } = useForm();
-const toast = useToast();
-const loading = ref(false);
-const accessToken = ref('');
-const userInfo: Record<string, any> = ref({});
+const { handleSubmit } = useForm(); // 用于Form校验
+const toast = useToast(); // 用于Toast通知
+const loading = ref(false); // 是否正在加载数据
+const accessToken = ref(''); // accessToken为非空字符串，则已经登录
+const userInfo: Ref<Record<string, any>> = shallowRef({}); // 用户信息
 
+// 初始化。看是否登录，并获取用户信息；有必要还会刷新Token
 async function init() {
   try {
     accessToken.value = await getAccessToken();
@@ -24,8 +26,10 @@ async function init() {
   }
 }
 
+// 组件初始化
 onMounted(init);
 
+// 表单提交逻辑处理
 const onSubmit = handleSubmit(async (values) => {
   loading.value = true;
   try {
@@ -38,6 +42,7 @@ const onSubmit = handleSubmit(async (values) => {
   }
 });
 
+// 退出登录逻辑处理
 async function onLogout() {
   loading.value = true;
   await logout();
@@ -47,6 +52,7 @@ async function onLogout() {
 </script>
 
 <template>
+  <!-- 没有登录则展示登录表单 -->
   <form
     v-if="!accessToken"
     @submit="onSubmit"
@@ -56,18 +62,26 @@ async function onLogout() {
     <FormPassword id="password" label="Password" />
     <Button class="w-full" type="submit" label="Login" :loading="loading" />
   </form>
-
+  <!-- 登录了展示欢迎信息和登出按钮 -->
   <div v-else class="main mt-5">
     <p>You have been logged in.</p>
     <p>Hello {{ userInfo.first_name }} {{ userInfo.last_name }} !</p>
-    <Button class="w-full mt-8" label="Logout" @click="onLogout" />
+    <Avatar :image="assetsUrl(userInfo.avatar, accessToken)" size="xlarge" />
+    <p>{{ userInfo.email }}</p>
+    <Button class="w-full mt-5" label="Logout" @click="onLogout" />
   </div>
 </template>
 
 <style scoped>
 .main {
-  width: 60%;
+  width: 80%;
   margin-left: auto;
   margin-right: auto;
+}
+
+@media (min-width: 576px) {
+  .main {
+    width: 60%;
+  }
 }
 </style>
