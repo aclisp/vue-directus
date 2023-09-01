@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import Button from 'primevue/button';
-import Avatar from 'primevue/avatar';
+import DrAvatar from '@/components/DrAvatar.vue';
 import FormInputText from '@/components/form/float-label/FormInputText.vue';
 import FormPassword from '@/components/form/float-label/FormPassword.vue';
 import { useForm } from 'vee-validate';
 import { login, logout } from '@/common/auth';
 import { useToast } from 'primevue/usetoast';
 import { ref, onMounted, shallowRef, type Ref } from 'vue';
-import { getAccessToken, assetsUrl } from '@/common/transport';
+import { getAccessToken } from '@/common/transport';
 import { fetchUserInfo } from '@/common/user';
 
 const { handleSubmit } = useForm(); // 用于Form校验
@@ -66,7 +66,7 @@ async function onLogout() {
   <div v-else class="main mt-5">
     <p>You have been logged in.</p>
     <p>Hello {{ userInfo.first_name }} {{ userInfo.last_name }} !</p>
-    <Avatar v-if="userInfo.avatar" :image="assetsUrl(userInfo.avatar, accessToken)" size="xlarge" />
+    <DrAvatar :image="userInfo.avatar" :token="accessToken" size="xlarge" />
     <p>{{ userInfo.email }}</p>
     <Button class="w-full mt-5" label="Logout" @click="onLogout" />
   </div>
