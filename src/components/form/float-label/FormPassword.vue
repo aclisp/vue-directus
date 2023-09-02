@@ -31,13 +31,13 @@ function validate(value: string) {
       <Password
         inputClass="w-full"
         :class="{ 'p-invalid': errorMessage }"
-        :inputId="props.id"
+        :inputId="id"
         toggleMask
         :feedback="false"
         v-model="value"
         v-bind="$attrs"
       />
-      <label :for="props.id">{{ props.label }}</label>
+      <label :for="id">{{ label }}</label>
     </span>
     <small class="p-error">{{ errorMessage || '&nbsp;' }}</small>
   </div>

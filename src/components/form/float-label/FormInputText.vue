@@ -31,11 +31,11 @@ function validate(value: string) {
       <InputText
         class="w-full"
         :class="{ 'p-invalid': errorMessage }"
-        :id="props.id"
+        :id="id"
         v-model.trim="value"
         v-bind="$attrs"
       />
-      <label :for="props.id">{{ props.label }}</label>
+      <label :for="id">{{ label }}</label>
     </span>
     <small class="p-error">{{ errorMessage || '&nbsp;' }}</small>
   </div>

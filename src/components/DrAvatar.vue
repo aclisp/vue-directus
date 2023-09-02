@@ -6,9 +6,9 @@ interface Props {
   image: string | undefined;
   token: string;
 }
-const props = defineProps<Props>();
+defineProps<Props>();
 </script>
 
 <template>
-  <Avatar v-if="props.image" :image="assetsUrl(props.image, props.token)" />
+  <Avatar v-if="image" :image="assetsUrl(image, token)" />
 </template>
