@@ -11,11 +11,11 @@ import { httpGet } from './transport';
 import { URLSearchParams } from './url-search-params-polyfill';
 
 export class User {
-  id?: string;
-  first_name?: string;
-  last_name?: string;
-  email?: string;
-  avatar?: string;
+  id?: string = undefined;
+  first_name?: string = undefined;
+  last_name?: string = undefined;
+  email?: string = undefined;
+  avatar?: string = undefined;
   ext?: object;
 }
 
