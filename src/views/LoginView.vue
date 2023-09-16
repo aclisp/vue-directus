@@ -8,13 +8,13 @@ import { login, logout } from '@/common/auth';
 import { useToast } from 'primevue/usetoast';
 import { ref, onMounted, shallowRef, type Ref } from 'vue';
 import { getAccessToken } from '@/common/transport';
-import { fetchUserInfo } from '@/common/user';
+import { User, fetchUserInfo } from '@/common/user';
 
 const { handleSubmit } = useForm(); // 用于Form校验
 const toast = useToast(); // 用于Toast通知
 const loading = ref(false); // 是否正在加载数据
 const accessToken = ref(''); // accessToken为非空字符串，则已经登录
-const userInfo: Ref<Record<string, any>> = shallowRef({}); // 用户信息
+const userInfo: Ref<User> = shallowRef(new User()); // 用户信息
 
 // 初始化。看是否登录，并获取用户信息；有必要还会刷新Token
 async function init() {

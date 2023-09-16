@@ -6,18 +6,29 @@
 // 填写会员表单时，将收集用户信息：姓名、手机、头像、地址、职位。这些信息暂时不允许其自行修改。
 // 会员名下有订单和积分。
 
+import { logDebug } from './logger';
 import { httpGet } from './transport';
 import { URLSearchParams } from './url-search-params-polyfill';
 
+export class User {
+  id?: string;
+  first_name?: string;
+  last_name?: string;
+  email?: string;
+  avatar?: string;
+  ext?: object;
+}
+
 export async function fetchUserInfo() {
   const params = new URLSearchParams();
-  params.append('fields', 'id,first_name,last_name,email,avatar');
+  params.append('fields', Object.keys(new User()).join(','));
   const user = await httpGet('/users/me', { params });
+  logDebug('user=%o', user);
   if (user.ok && user.id) {
     const ext = await fetchUserInfoExt(user.id);
     user.ext = ext;
   }
-  return user;
+  return user as User;
 }
 
 async function fetchUserInfoExt(userId: string) {
