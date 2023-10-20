@@ -5,7 +5,7 @@ import { NeedLoginError, AnotherUserLoginError } from './errors';
 import { URLSearchParams } from './url-search-params-polyfill';
 import jwtDecode from './jwt-decode';
 
-const directusHost = 'http://127.0.0.1:8055';
+const directusHost = 'http://localhost:8055';
 
 /**
  * Promise of Storage

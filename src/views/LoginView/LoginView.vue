@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import Button from 'primevue/button';
-import DrAvatar from '@/components/DrAvatar.vue';
-import FormInputText from '@/components/form/float-label/FormInputText.vue';
-import FormPassword from '@/components/form/float-label/FormPassword.vue';
+import AssetAvatar from '@/components/AssetAvatar.vue';
+import InputText from './components/InputText.vue';
+import InputPassword from './components/InputPassword.vue';
 import { useForm } from 'vee-validate';
 import { login, logout } from '@/common/auth';
 import { useToast } from 'primevue/usetoast';
@@ -58,15 +58,15 @@ async function onLogout() {
     @submit="onSubmit"
     class="main flex flex-column justify-content-center gap-3 mt-5"
   >
-    <FormInputText id="username" label="Username" />
-    <FormPassword id="password" label="Password" />
+    <InputText id="username" label="Username" />
+    <InputPassword id="password" label="Password" />
     <Button class="w-full" type="submit" label="Login" :loading="loading" />
   </form>
   <!-- 登录了展示欢迎信息和登出按钮 -->
   <div v-else class="main mt-5">
     <p>You have been logged in.</p>
     <p>Hello {{ userInfo.first_name }} {{ userInfo.last_name }} !</p>
-    <DrAvatar :image="userInfo.avatar" :token="accessToken" size="xlarge" />
+    <AssetAvatar :image="userInfo.avatar" :token="accessToken" size="xlarge" />
     <p>{{ userInfo.email }}</p>
     <Button class="w-full mt-5" label="Logout" @click="onLogout" />
   </div>
