@@ -153,7 +153,7 @@ function failure(res) {
 }
 
 async function success(res, mapResponse) {
-  if (res.statusCode == 204) {
+  if (res.status == 204) {
     return {
       ok: true,
       msg: `204 No Content`,
